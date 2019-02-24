@@ -10,18 +10,21 @@ import java.nio.charset.Charset;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        File tokenFile = new File(".token");
         String token = args.length > 0 && StringUtils.isNotBlank(args[0])
                 ? args[0]
-                : FileUtils.readFileToString(new File(".token"), Charset.forName("UTF-8"))
-                        .replace("\n", "")
-                        .replaceAll("/[^A-Za-z0-9.]/", "");
+                : tokenFile.exists()
+                        ? FileUtils.readFileToString(tokenFile, Charset.forName("UTF-8"))
+                                .replace("\n", "")
+                                .replaceAll("/[^A-Za-z0-9.]/", "")
+                        : "";
         if (StringUtils.isBlank(token)) {
             System.out.println("No bot token provided");
             System.exit(1);
         }
 
         try {
-            new SupportBot(token);
+            new Application(token);
         } catch (Exception e) {
             System.err.println("Failed to start: " + e.getMessage());
             e.printStackTrace();
