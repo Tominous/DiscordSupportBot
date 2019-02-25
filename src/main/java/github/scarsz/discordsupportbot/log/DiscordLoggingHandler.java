@@ -57,7 +57,6 @@ public class DiscordLoggingHandler extends Handler {
         return isReady() ? application.getBot().getJda().getTextChannelById("549492346706984960") : null;
     }
 
-    private static final Date DATE = new Date();
     private static final Map<String, Function<String, String>> LOG_MAPPINGS = new HashMap<String, Function<String, String>>() {{
         put("spark", clazz -> "Spark");
         put("org.eclipse.jetty", clazz -> "Jetty");
@@ -75,8 +74,6 @@ public class DiscordLoggingHandler extends Handler {
                         : record.getLevel() == Level.SEVERE
                                 ? "-"
                                 : "!";
-
-        DATE.setTime(record.getMillis());
 
         Function<String, String> function = LOG_MAPPINGS.entrySet().stream()
                 .filter(entry -> record.getSourceClassName().startsWith(entry.getKey()))
