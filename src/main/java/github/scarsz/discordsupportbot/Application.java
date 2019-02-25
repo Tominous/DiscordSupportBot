@@ -1,7 +1,8 @@
 package github.scarsz.discordsupportbot;
 
-import github.scarsz.discordsupportbot.sql.Database;
 import github.scarsz.discordsupportbot.discord.Bot;
+import github.scarsz.discordsupportbot.log.DiscordLoggingHandler;
+import github.scarsz.discordsupportbot.sql.Database;
 import github.scarsz.discordsupportbot.www.Http;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public class Application extends Thread {
     private Http http;
 
     public Application(String token) {
+        java.util.logging.Logger.getLogger("").addHandler(new DiscordLoggingHandler(this));
+
         logger.info("Initializing support bot application");
 
         // if a previous instance exists already, shut it down and wait for completion
@@ -68,7 +71,9 @@ public class Application extends Thread {
 
         logger.info("Completely finished initialization");
 
-        System.exit(0);
+        logger.error("Test error");
+
+        logger.info("Bot is in " + bot.getJda().getGuilds().size() + " guilds");
     }
 
     /**

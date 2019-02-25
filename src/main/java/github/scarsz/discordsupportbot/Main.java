@@ -19,7 +19,7 @@ public class Main {
                                 .replaceAll("/[^A-Za-z0-9.]/", "")
                         : "";
         if (StringUtils.isBlank(token)) {
-            System.out.println("No bot token provided");
+            System.err.println("No bot token provided");
             System.exit(1);
         }
 
