@@ -1,7 +1,6 @@
 package github.scarsz.discordsupportbot;
 
 import github.scarsz.discordsupportbot.discord.Bot;
-import github.scarsz.discordsupportbot.log.DiscordLoggingHandler;
 import github.scarsz.discordsupportbot.sql.Database;
 import github.scarsz.discordsupportbot.www.Http;
 import org.slf4j.Logger;
@@ -19,47 +18,47 @@ public class Application extends Thread {
     private Http http;
 
     public Application(String token) {
-        java.util.logging.Logger.getLogger("").addHandler(new DiscordLoggingHandler(this));
-
-        logger.info("Initializing support bot application");
-
-        // if a previous instance exists already, shut it down and wait for completion
-        if (instance != null) {
-            logger.info("Previous application instance found, shutting it down...");
-            instance.start();
-            try {
-                instance.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            logger.info("Finished shutting previous instance down");
-        }
-        instance = this;
-        logger.info("Instance set");
-
-        try {
-            Runtime.getRuntime().addShutdownHook(this);
-            logger.info("Added runtime shutdown hook");
-        } catch (Exception e) {
-            logger.error("Failed to add shutdown hook, not starting");
-            System.exit(2);
-        }
-
-        try {
-            database = new Database();
-        } catch (SQLException | ClassNotFoundException e) {
-            logger.error("Failed to initialize database");
-            e.printStackTrace();
-            System.exit(3);
-        }
-
-        try {
-            bot = new Bot(token);
-        } catch (Exception e) {
-            logger.error("Failed to connect to Discord");
-            e.printStackTrace();
-            System.exit(4);
-        }
+//        java.util.logging.Logger.getLogger("").addHandler(new DiscordLoggingHandler(this));
+//
+//        logger.info("Initializing support bot application");
+//
+//        // if a previous instance exists already, shut it down and wait for completion
+//        if (instance != null) {
+//            logger.info("Previous application instance found, shutting it down...");
+//            instance.start();
+//            try {
+//                instance.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            logger.info("Finished shutting previous instance down");
+//        }
+//        instance = this;
+//        logger.info("Instance set");
+//
+//        try {
+//            Runtime.getRuntime().addShutdownHook(this);
+//            logger.info("Added runtime shutdown hook");
+//        } catch (Exception e) {
+//            logger.error("Failed to add shutdown hook, not starting");
+//            System.exit(2);
+//        }
+//
+//        try {
+//            database = new Database();
+//        } catch (SQLException | ClassNotFoundException e) {
+//            logger.error("Failed to initialize database");
+//            e.printStackTrace();
+//            System.exit(3);
+//        }
+//
+//        try {
+//            bot = new Bot(token);
+//        } catch (Exception e) {
+//            logger.error("Failed to connect to Discord");
+//            e.printStackTrace();
+//            System.exit(4);
+//        }
 
         try {
             http = new Http();
@@ -70,8 +69,6 @@ public class Application extends Thread {
         }
 
         logger.info("Completely finished initialization");
-
-        logger.error("Test error");
 
         logger.info("Bot is in " + bot.getJda().getGuilds().size() + " guilds");
     }

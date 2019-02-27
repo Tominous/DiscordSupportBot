@@ -57,10 +57,11 @@ public class DiscordLoggingHandler extends Handler {
         return isReady() ? application.getBot().getJda().getTextChannelById("549492346706984960") : null;
     }
 
-    private static final Map<String, Function<String, String>> LOG_MAPPINGS = new HashMap<String, Function<String, String>>() {{
+    private static final Map<String, Function<String, String>> LOG_MAPPINGS = new LinkedHashMap<String, Function<String, String>>() {{
         put("spark", clazz -> "Spark");
         put("org.eclipse.jetty", clazz -> "Jetty");
         put("net.dv8tion.jda", clazz -> "JDA");
+        put("github.scarsz.discordsupportbot.www.Http", clazz -> "WWW");
         put("github.scarsz.discordsupportbot", clazz -> {
             String[] split = clazz.split("\\.");
             return split[split.length - 1];
