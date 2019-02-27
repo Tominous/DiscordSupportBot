@@ -29,16 +29,15 @@ public class DiscordLoggingHandler extends Handler {
 
     private void purgeChannel() {
         MessageHistory history = getChannel().getHistory();
-        while (true) {
-            List<Message> retrieved = history.retrievePast(100).complete();
-            if (retrieved.size() == 0) break;
-        }
 
-        for (List<Message> partition : ListUtils.partition(history.getRetrievedHistory(), 100)) {
-            if (partition.size() == 1) {
-                getChannel().deleteMessageById(partition.get(0).getId()).queue();
+        while (true) {
+            List<Message> messages = history.retrievePast(100).complete();
+            if (messages.size() == 0) {
+                break;
+            } else if (messages.size() == 1) {
+                getChannel().deleteMessageById(messages.get(0).getId()).queue();
             } else {
-                getChannel().deleteMessages(partition).queue();
+                getChannel().deleteMessages(messages).queue();
             }
         }
     }
