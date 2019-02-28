@@ -19,7 +19,7 @@ public class Application extends Thread {
     private Bot bot;
     private Http http;
 
-    public Application(String token) {
+    public Application(String token, String secret) {
         java.util.logging.Logger.getLogger("").addHandler(new DiscordLoggingHandler(this));
 
         logger.info("Initializing support bot application");
@@ -63,7 +63,7 @@ public class Application extends Thread {
         }
 
         try {
-            http = new Http();
+            http = new Http(bot.getJda().getSelfUser().getId(), secret);
         } catch (Exception e) {
             logger.error("Failed to initialize HTTP server");
             e.printStackTrace();
