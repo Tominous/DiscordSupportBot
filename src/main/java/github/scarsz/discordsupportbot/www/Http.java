@@ -17,7 +17,7 @@ public class Http {
     private final String oauthUrl;
 
     public Http(String clientId, String secret) {
-        oauthUrl = "https://discordapp.com/api/oauth2/authorize?client_id=" + clientId + "&redirect_uri=https%3A%2F%2Fsupport.scarsz.me%2Foauth&response_type=code&scope=identify";
+        oauthUrl = "https://discordapp.com/api/oauth2/authorize?client_id=" + clientId + "&redirect_uri=https%3A%2F%2Fsupport.scarsz.me%2Foauth&response_type=code&scope=identify&state=%state%";
 
         port(80);
         staticFiles.location("/static");
