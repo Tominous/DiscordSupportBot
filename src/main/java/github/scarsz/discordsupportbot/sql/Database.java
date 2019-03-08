@@ -5,9 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Database {
 
@@ -28,6 +26,12 @@ public class Database {
         //TODO tables
 
         logger.info("Finished database initialization");
+    }
+
+    public static PreparedStatement sql(String sql, Object... parameters) throws SQLException {
+        PreparedStatement statement = Application.get().getDatabase().connection.prepareStatement(sql);
+        for (int i = 0; i < parameters.length; i++) statement.setObject(i + 1, parameters[i]);
+        return statement;
     }
 
     public void loadFromFile() throws SQLException {

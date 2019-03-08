@@ -116,7 +116,6 @@ public class Http {
                 return "Discord returned code " + authRequest.code() + " for OAuth flow: " + authRequest.body();
             }
             Map<String, Object> json = gson.fromJson(authRequest.body(), new TypeToken<Map<String, Object>>(){}.getType());
-            System.out.println(json);
             session.attribute("oauth.token", json.get("access_token"));
             session.attribute("oauth.refresh", json.get("refresh_token")); // not implemented
             session.attribute("oauth.expires", json.get("expires_in")); // not implemented
@@ -129,7 +128,6 @@ public class Http {
                 return "Discord returned code " + authRequest.code() + " for token grant: " + authRequest.body();
             }
             json = gson.fromJson(userRequest.body(), new TypeToken<Map<String, Object>>(){}.getType());
-            System.out.println(json);
             session.attribute("discord.id", json.get("id"));
             session.attribute("discord.name", json.get("username"));
             session.attribute("discord.discriminator", json.get("discriminator"));

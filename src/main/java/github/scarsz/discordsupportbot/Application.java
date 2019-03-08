@@ -1,6 +1,5 @@
 package github.scarsz.discordsupportbot;
 
-import com.github.kevinsawicki.http.HttpRequest;
 import github.scarsz.discordsupportbot.discord.Bot;
 import github.scarsz.discordsupportbot.log.DiscordLoggingHandler;
 import github.scarsz.discordsupportbot.sql.Database;
