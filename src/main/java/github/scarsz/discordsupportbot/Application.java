@@ -1,7 +1,7 @@
 package github.scarsz.discordsupportbot;
 
 import github.scarsz.discordsupportbot.discord.Bot;
-import github.scarsz.discordsupportbot.log.DiscordLoggingHandler;
+import github.scarsz.discordsupportbot.discord.LoggingHandler;
 import github.scarsz.discordsupportbot.sql.Database;
 import github.scarsz.discordsupportbot.www.Http;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ public class Application extends Thread {
     private Http http;
 
     public Application(String token, String secret) {
-        java.util.logging.Logger.getLogger("").addHandler(new DiscordLoggingHandler(this));
+        java.util.logging.Logger.getLogger("").addHandler(new LoggingHandler(this));
 
         logger.info("Initializing support bot application");
 

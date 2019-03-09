@@ -1,4 +1,4 @@
-package github.scarsz.discordsupportbot.log;
+package github.scarsz.discordsupportbot.discord;
 
 import github.scarsz.discordsupportbot.Application;
 import github.scarsz.discordsupportbot.util.TimeUtil;
@@ -17,12 +17,12 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
 
-public class DiscordLoggingHandler extends Handler {
+public class LoggingHandler extends Handler {
 
     private final Application application;
     private final List<LogRecord> queue = new LinkedList<>();
 
-    public DiscordLoggingHandler(Application application) {
+    public LoggingHandler(Application application) {
         this.application = application;
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(this::flush, 1, 1, TimeUnit.SECONDS);
     }
