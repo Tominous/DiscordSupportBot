@@ -25,29 +25,6 @@ public class Configuration {
         this.uuid = helpdesk;
     }
 
-    private static <T> T get(UUID helpdesk, String column) {
-        try {
-            ResultSet result = Database.sql("SELECT `" + column + "` FROM `helpdesks` WHERE `uuid` = ?", helpdesk).executeQuery();
-            if (result.next()) {
-                //noinspection unchecked
-                return (T) result.getObject(column);
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Failed to retrieve " + column + " for " + helpdesk + ": " + e.getMessage(), e);
-            return null;
-        }
-    }
-
-    private static void set(UUID helpdesk, String column, Object value) {
-        try {
-            Database.sql("UPDATE `helpdesks` SET " + column + " = ? WHERE `uuid` = ?", helpdesk).executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Failed to set " + column + " for " + helpdesk + ": " + e.getMessage(), e);
-        }
-    }
-
     private static void set(UUID helpdesk, Object... parameters) {
         if (parameters.length % 2 != 0) throw new IllegalArgumentException("Parameter array length must be divisible by 2");
         List<String> segments = new LinkedList<>();
@@ -71,7 +48,7 @@ public class Configuration {
                 : null;
     }
     public String getCategoryId() {
-        return get(uuid, "category");
+        return Database.get(uuid, "helpdesks", "category");
     }
     public void setCategory(String id) {
         set(uuid, "category", id);
@@ -87,7 +64,7 @@ public class Configuration {
                 : null;
     }
     public String getTextChannelId() {
-        return get(uuid, "channel");
+        return Database.get(uuid, "helpdesks", "channel");
     }
     public void setChannel(String id) {
         set(uuid, "channel", id);

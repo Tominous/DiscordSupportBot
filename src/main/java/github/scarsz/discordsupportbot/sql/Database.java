@@ -6,12 +6,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.sql.*;
+import java.util.UUID;
 
 public class Database {
 
     private static final File FILE = new File("support.db");
 
-    private final Logger logger = LoggerFactory.getLogger(Application.class);
+    private final Logger logger = LoggerFactory.getLogger(Database.class);
     private final Connection connection;
 
     public Database() throws SQLException, ClassNotFoundException {
@@ -25,13 +26,36 @@ public class Database {
 
         //TODO tables
 
-        logger.info("Finished database initialization");
+        Application.get().getDatabase().logger.info("Finished database initialization");
     }
 
     public static PreparedStatement sql(String sql, Object... parameters) throws SQLException {
         PreparedStatement statement = Application.get().getDatabase().connection.prepareStatement(sql);
         for (int i = 0; i < parameters.length; i++) statement.setObject(i + 1, parameters[i]);
         return statement;
+    }
+
+    public static <T> T get(UUID uuid, String database, String column) {
+        try {
+            ResultSet result = Database.sql("SELECT `" + column + "` FROM `" + database + "` WHERE `uuid` = ?", uuid).executeQuery();
+            if (result.next()) {
+                //noinspection unchecked
+                return (T) result.getObject(column);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            Application.get().getDatabase().logger.error("Failed to retrieve " + column + " for " + uuid + " in " + database + ": " + e.getMessage(), e);
+            return null;
+        }
+    }
+
+    public static void update(UUID uuid, String database, String column, Object value) {
+        try {
+            Database.sql("UPDATE `" + database + "` SET " + column + " = ? WHERE `uuid` = ?", uuid).executeUpdate();
+        } catch (SQLException e) {
+            Application.get().getDatabase().logger.error("Failed to update " + column + " for " + uuid + " in " + database + ": " + e.getMessage(), e);
+        }
     }
 
     public void loadFromFile() throws SQLException {

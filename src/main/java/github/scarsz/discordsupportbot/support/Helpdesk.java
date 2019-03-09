@@ -1,5 +1,6 @@
 package github.scarsz.discordsupportbot.support;
 
+import github.scarsz.discordsupportbot.support.prompt.Prompt;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.TextChannel;
 
