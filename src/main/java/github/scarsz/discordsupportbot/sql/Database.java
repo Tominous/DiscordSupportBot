@@ -52,7 +52,7 @@ public class Database {
 
     public static void update(UUID uuid, String database, String column, Object value) {
         try {
-            Database.sql("UPDATE `" + database + "` SET " + column + " = ? WHERE `uuid` = ?", uuid).executeUpdate();
+            Database.sql("UPDATE `" + database + "` SET " + column + " = ? WHERE `uuid` = ?", value, uuid).executeUpdate();
         } catch (SQLException e) {
             Application.get().getDatabase().logger.error("Failed to update " + column + " for " + uuid + " in " + database + ": " + e.getMessage(), e);
         }
